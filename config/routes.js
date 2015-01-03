@@ -6,7 +6,7 @@ module.exports = function(app) {
     var index = require('../app/controllers/index');
     app.get('/', index.render);
 
-    var User = require('../app/models/user')
+    var User = require('../app/models/user');
 
     app.get('/api/users', function(req, res){
     	User.find(function(err, users) {
@@ -58,6 +58,7 @@ module.exports = function(app) {
     		user.udi = req.body.udi;
     		user.secret = Math.floor((Math.random() * 10000000) + 1);
             user.status = 'idle';
+            user.socketid = Math.floor((Math.random() * 10000000) + 1);
 
     		user.save(function(err) {
     			if (err)
@@ -108,7 +109,9 @@ module.exports = function(app) {
                 res.send(err);
             else {
                 if(req.body.result == 'win'){
+                    console.log(users[0].score);
                     users[0].score += 100;
+                    console.log(users[0].score);
                 }else if(req.body.result == 'lose'){
                     users[0].score -= 100;
                 }

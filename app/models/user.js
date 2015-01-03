@@ -1,5 +1,6 @@
 var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
+var Puzzle = require('./puzzle');
 
 var UserSchema   = new Schema({
 	name: {type: String, required: true}, 
@@ -8,7 +9,9 @@ var UserSchema   = new Schema({
 	secret: {type: String, required: true, unique: true}, 
 	status: {type: String, required: true, unique: false, default: 'idle'}, 
 	opponent: {type: String, unique: false, default: ''}, 
-	score: {type: Number, unique: false, default: 1000}
+	score: {type: Number, unique: false, default: 1000},
+	socketid: {type: String, required: true, unique: true}, 
+	puzzle: {type: [Puzzle.schema]}
 });
 
 module.exports = mongoose.model('User', UserSchema);
