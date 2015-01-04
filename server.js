@@ -152,7 +152,7 @@ io.sockets.on('connection', function (socket) {
       if (err)
         socket.emit('FETCHPUZZLE', err);
       else {
-        socket.emit('FETCHPUZZLE', doc.puzzle[0].remove());
+        socket.emit('FETCHPUZZLE', doc.puzzle.remove({}));
         doc.save();
       }
     });
