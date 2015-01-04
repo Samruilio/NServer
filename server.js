@@ -157,6 +157,19 @@ io.sockets.on('connection', function (socket) {
       }
     });
   });
+
+  socket.on('OFFLINE', function (data) {
+    User.findOne({socketid: socket.id}, function(err, doc) {
+      if (err)
+        socket.emit('OFFLINE', err);
+      else {
+        doc.status = 'offline';
+        doc.opponent = '';
+        doc.puzzle.remove({});
+        doc.save();
+      }
+    });
+  });
 });
 
 //Start the app by listening on <port>
