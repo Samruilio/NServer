@@ -158,10 +158,10 @@ io.sockets.on('connection', function (socket) {
     });
   });
 
-  socket.on('OFFLINE', function (data) {
+  socket.on('disconnect', function (data) {
     User.findOne({socketid: socket.id}, function(err, doc) {
       if (err)
-        socket.emit('OFFLINE', err);
+        socket.emit('disconnect', err);
       else {
         doc.status = 'offline';
         doc.opponent = '';
