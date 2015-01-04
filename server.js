@@ -152,7 +152,7 @@ io.sockets.on('connection', function (socket) {
       if (err)
         socket.emit('FETCHPUZZLE', err);
       else {
-        socket.emit('FETCHPUZZLE', doc.puzzle.remove({}));
+        socket.emit('FETCHPUZZLE', doc.puzzle[0].remove());
         doc.save();
       }
     });
@@ -165,7 +165,9 @@ io.sockets.on('connection', function (socket) {
       else {
         doc.status = 'offline';
         doc.opponent = '';
-        doc.puzzle.remove({});
+        doc.puzzle.forEach( function (puzzle) {
+          puzzle.remove();
+        });
         doc.save();
       }
     });
