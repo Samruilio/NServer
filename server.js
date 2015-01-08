@@ -158,6 +158,24 @@ io.sockets.on('connection', function (socket) {
     });
   });
 
+  socket.on('FETCHRANK', function (data) {
+    User.find({}).select({name: 1, uid: 1, score: 1, _id: 0}).sort({score: -1}).limit(10).exec(function(err, docs) {
+      if (err)
+        socket.emit('FETCHRANK', err);
+      else
+        socket.emit('FETCHRANK', {array: docs});
+    });
+  });
+
+  socket.on('SEARCHRANK', function (data) {
+    User.find({}).select({name: 1, uid: 1, score: 1, _id: 0}).sort({score: -1}).limit(10).exec(function(err, docs) {
+      if (err)
+        socket.emit('FETCHRANK', err);
+      else
+        socket.emit('FETCHRANK', {array: docs});
+    });
+  });
+
   socket.on('disconnect', function (data) {
     User.findOne({socketid: socket.id}, function(err, doc) {
       if (err)
