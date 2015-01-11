@@ -159,7 +159,7 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('FETCHRANK', function (data) {
-    User.find({}).select({name: 1, uid: 1, score: 1, _id: 0}).sort({score: -1}).limit(10).exec(function(err, docs) {
+    User.find({}).select({name: 1, uid: 1, score: 1, _id: 0}).sort({score: -1, uid: 1}).limit(10).exec(function(err, docs) {
       if (err)
         socket.emit('FETCHRANK', err);
       else
@@ -168,11 +168,29 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('SEARCHRANK', function (data) {
-    User.find({}).select({name: 1, uid: 1, score: 1, _id: 0}).sort({score: -1}).limit(10).exec(function(err, docs) {
+    var condition;
+    if(data !== null && data !== '') {
+      condition = {uid: data.uid};
+    } else {
+      condition = {socketid: socket.id};
+    }
+    User.findOne(condition, function(err, doc) {
       if (err)
-        socket.emit('FETCHRANK', err);
-      else
-        socket.emit('FETCHRANK', {array: docs});
+        socket.emit('SEARCHRANK', err);
+      else {
+        if(doc === null) {
+          socket.emit('SEARCHRANK', null);
+        } else {
+          User.find({}).gte('score', doc.score).lt('uid', doc.uid).count({}, function(err, count) {
+            if (err)
+              socket.emit('SEARCHRANK', err);
+            else {
+              console.log(count);
+              socket.emit('SEARCHRANK', {name: doc.name, uid: doc.uid, score: doc.score, rank: count});
+            }
+          });
+        }
+      }
     });
   });
 
