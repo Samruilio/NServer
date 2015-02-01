@@ -59,7 +59,7 @@ io.sockets.on('connection', function (socket) {
           doc.status = 'idle';
           doc.opponent = '';
           doc.save();
-          socket.emit('LOGIN', {user: 'Existed'});
+          socket.emit('LOGIN', {user: 'Existed', bindaccount: doc.bindaccount});
         } else {
           socket.emit('LOGIN', {user: 'NotExisted'});
         }
@@ -76,6 +76,13 @@ io.sockets.on('connection', function (socket) {
       user.secret = Math.floor((Math.random() * 10000000) + 1);
       user.status = 'idle';
       user.socketid = socket.id;
+
+      if(data.fbid !== null && data.fbid !== '') {
+        user.bindaccount = 'Facebook';
+        user.fbid = data.fbid;
+      } else {
+        user.bindaccount = '';
+      }
 
       user.save(function(err) {
         if (err)
@@ -199,12 +206,14 @@ io.sockets.on('connection', function (socket) {
       if (err)
         socket.emit('disconnect', err);
       else {
-        doc.status = 'offline';
-        doc.opponent = '';
-        doc.puzzle.forEach( function (puzzle) {
-          puzzle.remove();
-        });
-        doc.save();
+        if(doc !== null) {
+          doc.status = 'offline';
+          doc.opponent = '';
+          doc.puzzle.forEach( function (puzzle) {
+            puzzle.remove();
+          });
+          doc.save();
+        }
       }
     });
   });

@@ -11,6 +11,8 @@ var UserSchema   = new Schema({
 	opponent: {type: String, unique: false, default: ''}, 
 	score: {type: Number, unique: false, default: 1000},
 	socketid: {type: String, required: true, unique: true}, 
+	bindaccount: {type: String, required: true, default: ''}, 
+	fbid: {type: String, required: false}, 
 	puzzle: {type: [Puzzle.schema]}
 });
 
