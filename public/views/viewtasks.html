@@ -1,0 +1,51 @@
+<div data-ng-controller="ViewTasksController" class="panel panel-default" style="overflow-x:scroll">
+
+  <!-- Table -->
+  <table class="table" ng-init="fetchTasks()">
+    <tr class="info">
+      <th>Task Name</th>
+      <th>Creator</th>   
+      <th>Create Time</th>
+      <th>Start Time</th>
+      <th>Repeat Mode</th>
+      <th>Completed</th>
+      <th>Complete Time</th>
+      <th>Company Name</th>
+      <th>Login Username</th>
+      <th>Login Password</th>
+      <th>Export Type</th>
+      <th>Debtor</th>
+      <th>Date Type</th>
+      <th>Export Start Date</th>
+      <th>Export End Date</th>
+      <th>Segment Type</th>
+      <th>Notification Email To</th>
+      <th>Export Email To</th>
+      <th>Operations</th>
+    </tr>
+
+  <tr ng-repeat="task in tasks" class="success">
+    <td><a href="" editable-text="task.name">{{ task.name }}</a></td>
+    <td><a href="" editable-text="task.creator">{{ task.creator }}</a></td>
+    <td><a href="" editable-text="task.createtime">{{ task.createtime }}</a></td>
+    <td><a href="" editable-text="task.starttime">{{ task.starttime }}</a></td>
+    <td><a href="" editable-select="task.repeat" e-ng-options="r.name as r.name for r in repeatModes">{{ task.repeat }}</a></td>
+    <td><a href="" editable-radiolist="task.completed" e-ng-options="b.value as b.value for b in booleans">{{ task.completed }}</a></td>
+    <td><a href="" editable-text="task.completetime">{{ task.completetime }}</a></td>
+    <td><a href="" editable-select="task.accountaddr" e-ng-options="addr.name as addr.name for addr in accountAddrs">{{ task.accountaddr }}</a></td>
+    <td><a href="" editable-text="task.accountname">{{ task.accountname }}</a></td>
+    <td><a href="" editable-text="task.accountpass">{{ task.accountpass }}</a></td>
+    <td><a href="" editable-select="task.exporttype" e-ng-options="expt.name as expt.name for expt in exportTypes">{{ task.exporttype }}</a></td>
+    <td><a href="" editable-text="task.debtor">{{ task.debtor }}</a></td>
+    <td><a href="" editable-select="task.datetype" e-ng-options="dt.name as dt.name for dt in dateTypes">{{ task.datetype }}</a></td>
+    <td><a href="" editable-text="task.startdate">{{ task.startdate }}</a></td>
+    <td><a href="" editable-text="task.enddate">{{ task.enddate }}</a></td>
+    <td><a href="" editable-select="task.segmenttype" e-ng-options="sgt.name as sgt.name for sgt in segmentTypes">{{ task.segmenttype }}</a></td>
+    <td><a href="" editable-text="task.emailto">{{ task.emailto }}</a></td>
+    <td><a href="" editable-text="task.exportemailto">{{ task.exportemailto }}</a></td>
+    <td>
+      <button class="btn btn-default center-block" ng-click="deleteTask(task)">Delete</button>
+    </td>
+  </tr>
+  </table>
+</div>

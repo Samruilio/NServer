@@ -6,6 +6,12 @@ module.exports = function(app) {
     var index = require('../app/controllers/index');
     app.get('/', index.render);
 
+    //Sheduler
+    var scheduler = require('../app/controllers/scheduler');
+    scheduler(app);
+
+    //apis
+
     var User = require('../app/models/user');
 
     app.get('/api/users', function(req, res){

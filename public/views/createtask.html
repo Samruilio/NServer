@@ -1,0 +1,135 @@
+<div data-ng-controller="CreateTaskController">
+
+  <form>
+    <div class="row">
+
+      <div class="col-sm-4 col-md-3">
+        <div class="form-group">
+          <label for="taskNameInput">Task Name</label>
+          <input class="form-control" id="taskNameInput" ng-model="taskName" ng-required="true">
+        </div>
+        <div class="form-group">
+          <label for="repeatModeInput">Repeat Mode</label>
+          <div class="dropdown">
+            <input class="form-control dropdown-toggle" data-toggle="dropdown" id="repeatModeInput" ng-model="repeatMode" ng-required="true">
+            <ul class="dropdown-menu" role="menu">
+              <li role="presentation" ng-repeat="mode in repeatModes">
+                <a role="menuitem" href="" ng-click="$parent.repeatMode=mode.name">{{mode.name}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="datetimepicker">Start Time</label>
+          <p class="input-group">
+            <input type="text" class="form-control" datepicker-popup="{{startTimeFormat}}" ng-model="startTime" is-open="isStartTimeOpened" min="minDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" show-weeks="false"/>
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="openStartTime($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </p>
+          <timepicker ng-model="startTimePoint" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+        </div>
+      </div>
+
+      <div class="col-sm-4 col-md-3">
+        <div class="form-group">
+          <label for="accountAddrInput">Company Name</label>
+          <div class="dropdown">
+            <input class="form-control dropdown-toggle" data-toggle="dropdown" id="accountAddrInput" ng-model="accountAddr" ng-required="true">
+            <ul class="dropdown-menu" role="menu">
+              <li role="presentation" ng-repeat="accaddr in accountAddrs">
+                <a role="menuitem" href="" ng-click="$parent.accountAddr=accaddr.name">{{accaddr.name}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="accountNameInput">Login Name</label>
+          <input class="form-control" id="accountNameInput" ng-model="accountName" ng-required="true">
+        </div>
+        <div class="form-group">
+          <label for="accountPassInput">Login Password</label>
+          <input class="form-control" id="accountPassInput" ng-model="accountPass" ng-required="true">
+        </div>
+        <div class="form-group">
+          <label for="exportTypeInput">Export Type</label>
+          <div class="dropdown">
+            <input class="form-control dropdown-toggle" data-toggle="dropdown" id="exportTypeInput" ng-model="exportType" ng-required="true">
+            <ul class="dropdown-menu" role="menu">
+              <li role="presentation" ng-repeat="exptype in exportTypes">
+                <a role="menuitem" href="" ng-click="$parent.exportType=exptype.name">{{exptype.name}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-4 col-md-3">
+        <div class="form-group">
+          <label for="debtorInput">Debtor</label>
+          <input class="form-control" id="debtorInput" ng-model="debtor">
+        </div>
+        <div class="form-group">
+          <label for="dateTypeInput">Date Type</label>
+          <div class="dropdown">
+            <input class="form-control dropdown-toggle" data-toggle="dropdown" id="dateTypeInput" ng-model="dateType" ng-required="true">
+            <ul class="dropdown-menu" role="menu">
+              <li role="presentation" ng-repeat="datype in dateTypes">
+                <a role="menuitem" href="" ng-click="$parent.dateType=datype.name">{{datype.name}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="datetimepicker">Export Start Date</label>
+          <p class="input-group">
+            <input type="text" class="form-control" datepicker-popup="{{exportDateFormat}}" ng-model="exportStartDate" is-open="isExportStartDateOpened"  datepicker-options="dateOptions" ng-required="true" close-text="Close" show-weeks="false"/>
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="openExportStartDate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </p>
+        </div>
+        <div class="form-group">
+          <label for="datetimepicker">Export End Date</label>
+          <p class="input-group">
+            <input type="text" class="form-control" datepicker-popup="{{exportDateFormat}}" ng-model="exportEndDate" is-open="isExportEndDateOpened"  datepicker-options="dateOptions" ng-required="true" close-text="Close" show-weeks="false"/>
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="openExportEndDate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="col-sm-4 col-md-3">
+        <div class="form-group">
+          <label for="segmentTypeInput">Segment Type</label>
+          <div class="dropdown">
+            <input class="form-control dropdown-toggle" data-toggle="dropdown" id="segmentTypeInput" ng-model="segmentType" ng-required="true">
+            <ul class="dropdown-menu" role="menu">
+              <li role="presentation" ng-repeat="segType in segmentTypes">
+                <a role="menuitem" href="" ng-click="$parent.segmentType=segType.name">{{segType.name}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="emailToInput">Notification Email To</label>
+          <input class="form-control" id="emailToInput" ng-model="emailto" ng-required="true">
+        </div>
+        <div class="form-group">
+          <label for="notificationEmailToInput">Export Data Email To</label>
+          <input class="form-control" id="notificationEmailToInput" ng-model="exportemailto" ng-required="true">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <button type="submit" class="btn btn-default center-block" ng-click='createTask()'>Create</button>
+    </div>
+  </form>
+  
+
+
+  
+</div>

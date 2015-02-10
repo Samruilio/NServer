@@ -59,13 +59,13 @@ module.exports = function(app, db) {
     app.use(methodOverride());
 
     // Express/Mongo session storage
-    app.use(session({
-        secret: config.sessionSecret,
-        store: new MongoStore({
-            db: db.connection.db,
-            collection: config.sessionCollection
-        })
-    }));
+    // app.use(session({
+    //     secret: config.sessionSecret,
+    //     store: new MongoStore({
+    //         db: db.connection.db,
+    //         collection: config.sessionCollection
+    //     })
+    // }));
 
     // Dynamic helpers
     app.use(helpers(config.app.name));

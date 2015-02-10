@@ -45,8 +45,9 @@ var http = require('http').Server(app);
 var io = require('socket.io').listen(http);
 
 var User = require('./app/models/user');
-var Puzzle = require('./app/models/puzzle')
+var Puzzle = require('./app/models/puzzle');
 require('./game/game_matcher')();
+require('./test/notifier')();
 
 io.sockets.on('connection', function (socket) {
   socket.on('LOGIN', function (data) {
