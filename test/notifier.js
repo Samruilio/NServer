@@ -186,7 +186,7 @@ var searchForIncompleteTasks = function() {
 
 function searchForExports() {
 	var date = new Date();
-	console.log('fromDate-toDate: ' + date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear());
+	console.log('search fromDate-toDate: ' + date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear());
 	fromDate = toDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
 	var options = {
 		url: 'https://asp.tramada.com.au/ttms/' + address +'/admin/exports-search.htm',
@@ -210,8 +210,8 @@ function searchForExports() {
 		var receiveTime = new Date(siblings.eq(1).text());
 		console.log('receiveTime: ' + receiveTime);
 
-		console.log(siblings.eq(5).text());
-		console.log(siblings.eq(6).text());
+		console.log('fetched dateStart' + siblings.eq(5).text());
+		console.log('fetched dateEnd' + siblings.eq(6).text());
 
 		console.log('time difference: ' + Math.abs(receiveTime.getTime() - requestTime.getTime()));
 		if(Math.abs(receiveTime.getTime() - requestTime.getTime()) <= 5000 && 
@@ -245,7 +245,7 @@ function downloadExport(filename) {
 		var zip = new AdmZip('file.zip');
 		var zipEntries = zip.getEntries();
 
-		console.log(zipEntries[0].name);
+		console.log('downloaded filename ' + zipEntries[0].name);
 
 		zip.extractAllTo(/*target path*/'./', /*overwrite*/true);
 
@@ -381,6 +381,8 @@ function createExport() {
 			searchForExports();
 		} else {
 			tramadaAPIResult = 'failed';
+			updateTask();
+			setTimeout(searchForIncompleteTasks, 5000);
 		}
 
 	});
@@ -409,6 +411,8 @@ function login() {
 			createExport();
 		} else {
 			tramadaAPIResult = 'failed';
+			updateTask();
+			setTimeout(searchForIncompleteTasks, 5000);
 		}
 
 	});
