@@ -10,9 +10,11 @@ module.exports = function notifier(app) {
 	app.post('/scheduler/tasks', getTasks);
 	app.post('/scheduler/deleteTask', deleteTask);
 	app.post('/scheduler/modifyTask', modifyTask);
+	app.post('/scheduler/userLogout', userLogout)
 };
 
 function deleteTask(req, res) {
+	checkLogin(req, res);
 	Task.findOneAndRemove({_id: req.body._id}, function(err, doc) {
 		if (err)
 			res.send({error: err});
@@ -27,10 +29,12 @@ function deleteTask(req, res) {
 }
 
 function modifyTask(req, res) {
+	checkLogin(req, res);
 
 }
 
 function getTasks(req, res) {
+	checkLogin(req, res);
 	Task.find({}, function(err, docs) {
 		if (err)
 			res.send({error: err});
@@ -45,6 +49,7 @@ function getTasks(req, res) {
 }
 
 function createTask(req, res) {
+	checkLogin(req, res);
 	var task = new Task();
 	task.name = req.body.name;
 	task.creator = req.body.creator;
@@ -89,6 +94,7 @@ function createUser(req, res) {
 }
 
 function userLogin(req, res) {
+	console.log(req.sessionID.toString());
 	SchedulerUser.findOne({name: req.body.username, password: req.body.password}, function(err, doc) {
 		if(err) {
 			res.send({error: err});
@@ -106,15 +112,45 @@ function userLogin(req, res) {
 	});
 }
 
-function checkLogin(req, res) {
+function userLogout(req, res) {
+	console.log(req.sessionID);
 	SchedulerUser.findOne({sessionid: req.sessionID}, function(err, doc) {
 		if (err)
 			res.send({error: err});
 		else {
 			if(doc !== null) {
-
+				doc.islogin = 'false';
+				doc.save(function(err) {
+					if (err)
+						res.send({error: err});
+					else {
+						res.send({islogin: 'false'});
+					}
+				});
 			} else {
+				res.send({islogin: 'false'});
+			}
+		}
+	});
+}
 
+function checkLogin(req, res) {
+	console.log(req.sessionID);
+	SchedulerUser.findOne({sessionid: req.sessionID}, function(err, doc) {
+		if (err)
+			res.send({error: err});
+		else {
+			if(doc !== null) {
+				if(doc.islogin === 'true') {
+					console.log('true');
+					return true;
+				} else {
+					console.log('true');
+					return false;
+				}
+			} else {
+				console.log('true');
+				return false;
 			}
 		}
 	});
