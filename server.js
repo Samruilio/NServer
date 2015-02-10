@@ -15,6 +15,7 @@ var express = require('express'),
 // Initializing system variables
 var config = require('./config/config');
 var db     = mongoose.connect(config.db);
+console.log(db);
 
 //Bootstrap models
 var models_path = __dirname + '/app/models';
