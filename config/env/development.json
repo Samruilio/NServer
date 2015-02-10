@@ -1,6 +1,6 @@
 {
     "db": "mongodb://localhost/mean-dev",
     "app": {
-        "name": "HADES - MULSER - Development"
+        "name": "TravelEdge Report Scheduler"
     }
 }
