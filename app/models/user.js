@@ -13,7 +13,7 @@ var UserSchema   = new Schema({
 	socketid: {type: String, required: true, unique: true}, 
 	bindaccount: {type: String, required: true, default: ''}, 
 	fbid: {type: String, required: false}, 
-	puzzle: {type: [Puzzle.schema]}
+	puzzle: {type: [Puzzle.schema]}, 
 });
 
 module.exports = mongoose.model('User', UserSchema);

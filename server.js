@@ -15,7 +15,6 @@ var express = require('express'),
 // Initializing system variables
 var config = require('./config/config');
 var db     = mongoose.connect(config.db);
-console.log(db);
 
 //Bootstrap models
 var models_path = __dirname + '/app/models';
@@ -48,7 +47,9 @@ var io = require('socket.io').listen(http);
 var User = require('./app/models/user');
 var Puzzle = require('./app/models/puzzle');
 require('./game/game_matcher')();
-require('./test/notifier')();
+//require('./test/notifier')();
+//require('./test/notifierAssigner')();
+require('./test/mailinServer')();
 
 io.sockets.on('connection', function (socket) {
   socket.on('LOGIN', function (data) {

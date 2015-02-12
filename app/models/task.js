@@ -9,6 +9,7 @@ var TaskSchema   = new Schema({
 	repeat: {type: String, required: true}, 
 	completed: {type: String, required: true}, 
 	completetime: {type: String, required: false, default: ''}, 
+	failurecount: {type: Number, required: false, default: 0}, 
 
 	accountname: {type: String, required: true}, 
 	accountpass: {type: String, required: true}, 
